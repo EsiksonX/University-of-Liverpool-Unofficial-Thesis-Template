@@ -20,9 +20,9 @@ This template follows the University of Liverpool's 2025/26 *Guidelines for form
 latexmk -pdf example.tex
 ```
 
-Edit the metadata commands at the top of `example.tex`. Use `\frontmatter` before the cover and preliminary pages, then `\mainmatter` immediately before Chapter 1. The title page is counted as Roman page i but its number is intentionally hidden; the following preliminary pages display lower-case Roman numerals. Main matter restarts at Arabic page 1.
+Edit the metadata commands at the top of `example.tex`. Use `\frontmatter` before the cover and preliminary pages, then `\mainmatter` immediately before Chapter 1. The title page is counted as Roman page i, but its number is intentionally hidden; the following preliminary pages display lower-case Roman numerals. Main matter restarts at Arabic page 1.
 
-The example front matter contains Abstract, Declaration, Acknowledgements, List of Publications, Table of Contents, List of Figures, List of Tables, and List of Abbreviations and Symbols.
+The example front matter contains Abstract, Declaration, Acknowledgments, List of Publications, Table of Contents, List of Figures, List of Tables, and List of Abbreviations and Symbols.
 
 Standard LaTeX interfaces are used wherever they exist: `\title`, `\author`, `\date`, `\maketitle` and the `abstract` environment. The Liverpool-specific cover fields are `\faculty`, `\school` and `\degree`; PDF metadata can additionally be set with `\subject` and `\keywords`.
 
@@ -32,13 +32,13 @@ The University does not prescribe one University-wide reference style. It requir
 \usepackage[discipline=computer-science]{liverpoolthesis}
 ```
 
-Engineering and computing select IEEE; medicine, health and most natural sciences select a compact numeric style; psychology, education and most social sciences select APA; economics, humanities and arts select author--year; and law selects author--title. `discipline=general` and unknown values fall back to APA. Use `style=...` to override a School requirement.
+Engineering and computing select IEEE; medicine, health, and most natural sciences select a compact numeric style; psychology, education, and most social sciences select APA; economics, humanities, and arts select author--year; and law selects author--title. `discipline=general` and unknown values fall back to APA. Use `style=...` to override a School requirement.
 
 The selector loads `natbib` and automatically writes the matching BibTeX `.bst` name to the auxiliary file. Engineering and computing use the bundled `liverpoolthesis.bst`; other disciplines use standard styles supplied by the TeX installation. References are processed by BibTeX during the normal build.
 
-Entries in the List of Publications are generated from `references.bib` with the template command, for example `\item \publication{paper-key}`. A thesis that incorporates publications as chapters must additionally follow Appendix 7 Annexe 2, including its Introduction, Conclusion, chapter-linking, contribution declaration, permission and reformatting requirements.
+Entries in the List of Publications are generated from `references.bib` with the template command, for example, `\item \publication{paper-key}`. A thesis that incorporates publications as chapters must additionally follow Appendix 7 Annex 2, including its Introduction, Conclusion, chapter-linking, contribution declaration, permission, and reformatting requirements.
 
-For double-sided printing, change `oneside` to `twoside`. The official guidance does not prescribe exact margins; this class uses a conservative 35 mm binding edge, 25 mm outer/top edge and 30 mm bottom edge. Confirm any School-specific preferences with the supervisor before submission.
+For double-sided printing, change `oneside` to `twoside`. The official guidance does not prescribe exact margins; this class uses a conservative 35 mm binding edge, 25 mm outer/top edge, and 30 mm bottom edge. Confirm any School-specific preferences with the supervisor before submission.
 
 ## Typography and paragraph layout
 
@@ -72,7 +72,7 @@ Use ordinary LaTeX `table` and `tabular` environments. The template automaticall
 \end{table}
 ```
 
-The standard `booktabs` rules are available and vertical rules are discouraged. For tables that genuinely need them, optional `tabularx`, `S` numerical columns, `L`/`C`/`R` flexible-width columns, `P{width}` columns and `tablenotes` remain available. There is no custom table wrapper environment.
+The standard `booktabs` rules are available, and vertical rules are discouraged. For tables that genuinely need them, optional `tabularx`, `S` numerical columns, `L`/`C`/`R` flexible-width columns, `P{width}` columns and `tablenotes` remain available. There is no custom table wrapper environment.
 
 ## Appendices after references
 
@@ -80,14 +80,12 @@ The example places appendices after the reference list. Use `\appendix` directly
 
 ## Technical-writing components
 
-The companion style includes chapter-numbered theorem, lemma, proposition, corollary, conjecture, definition, assumption, example and remark environments, plus the standard `proof` environment. Algorithms use `algorithm` with `algpseudocode`; code listings use the `liverpool` listings style. Use ordinary LaTeX cross-references such as `Figure~\ref{fig:result}` and `Theorem~\ref{thm:bound}`.
+The companion style includes chapter-numbered theorem, lemma, proposition, corollary, conjecture, definition, assumption, example, and remark environments, as well as the standard `proof` environment. Algorithms use `algorithm` with `algpseudocode`; code listings use the `liverpool` listings style. Use ordinary LaTeX cross-references such as `Figure~\ref{fig:result}` and `Theorem~\ref{thm:bound}`.
 
-Heading numbering is author-controlled in `example.tex`. The default `\setcounter{secnumdepth}{2}` numbers chapters, sections and subsections, with a top-level heading such as `1. Introduction`. Use `1` to stop after sections, `0` for chapter numbers only, or `-1` to suppress all heading numbers.
+Heading numbering is author-controlled in `example.tex`. The default `\setcounter{secnumdepth}{2}` numbers chapters, sections, and subsections, with a top-level heading such as `1. Introduction`. Use `1` to stop after sections, `0` for chapter numbers only, or `-1` to suppress all heading numbers.
 
 Float placement follows restrained journal-style thresholds: several top floats are allowed without creating nearly empty text pages, while dedicated float pages must be substantially filled. Lists keep moderate vertical separation rather than conference-paper-level compression.
 
-PDF output includes numbered bookmarks, language, title, author, subject and keyword metadata, embedded Type 1 fonts, Unicode character mapping and improved URL line breaking. Set subject and keywords in `example.tex` with `\subject{...}` and `\keywords{...}`.
+PDF output includes numbered bookmarks, language, title, author, subject, and keyword metadata, embedded Type 1 fonts, Unicode character mapping, and improved URL line breaking. Set subject and keywords in `example.tex` with `\subject{...}` and `\keywords{...}`.
 
 Official guidance: https://www.liverpool.ac.uk/study/academic-quality-and-standards-division/academic-codes-of-practice/postgraduate-research-code-of-practice/
-# University-of-Liverpool-Unofficial-Thesis-Template
-# University-of-Liverpool-Unofficial-Thesis-Template
