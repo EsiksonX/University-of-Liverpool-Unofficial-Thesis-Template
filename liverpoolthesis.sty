@@ -1,0 +1,213 @@
+% Companion visual style for liverpoolthesis.cls
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesPackage{liverpoolthesis}[2026/07/31 v2.0 Liverpool thesis style]
+
+\RequirePackage{kvoptions}
+\SetupKeyvalOptions{family=uolbib,prefix=uolbib@}
+\DeclareStringOption[general]{discipline}
+\DeclareStringOption[]{style}
+\ProcessKeyvalOptions*
+
+\RequirePackage{xcolor}
+\RequirePackage{microtype}
+\RequirePackage{booktabs}
+\RequirePackage{array}
+\RequirePackage{tabularx}
+\RequirePackage{longtable}
+\RequirePackage{threeparttable}
+\RequirePackage{siunitx}
+\RequirePackage{caption}
+\RequirePackage{subcaption}
+\RequirePackage{etoolbox}
+\RequirePackage{titlesec}
+\RequirePackage{enumitem}
+\RequirePackage{mathtools}
+\RequirePackage{algorithm}
+\RequirePackage{algpseudocode}
+\RequirePackage{listings}
+\RequirePackage{csquotes}
+% newtxmath already supplies the AMS symbol set; loading amssymb again would
+% redefine symbols such as \Bbbk.
+
+\definecolor{LiverpoolBlue}{HTML}{101F6B}
+\definecolor{LiverpoolGold}{HTML}{B48300}
+
+\titleformat{\chapter}[hang]
+  {\normalfont\Huge\bfseries\color{LiverpoolBlue}\raggedright}
+  {\thechapter.}
+  {0.75em}
+  {}
+\titlespacing*{\chapter}{0pt}{-10pt}{36pt}
+
+\titleformat{\section}
+  {\normalfont\Large\bfseries\color{LiverpoolBlue}}
+  {\thesection}{0.75em}{}
+\titleformat{\subsection}
+  {\normalfont\large\bfseries\color{LiverpoolBlue}}
+  {\thesubsection}{0.75em}{}
+\titleformat{\paragraph}[runin]
+  {\normalfont\normalsize\bfseries}
+  {\theparagraph}{0.75em}{}[.]
+\titlespacing*{\paragraph}{0pt}{1.25ex plus .4ex minus .2ex}{0.75em}
+
+\captionsetup{font=small,labelfont=bf,justification=centering}
+\captionsetup[table]{position=top,skip=6pt}
+\captionsetup[figure]{position=bottom,skip=6pt}
+\renewcommand{\arraystretch}{1.15}
+\setlength{\tabcolsep}{6pt}
+% Ordinary table/tabular environments inherit the thesis table typography.
+% Authors can therefore use standard LaTeX syntax without a wrapper environment.
+\AtBeginEnvironment{table}{\small}
+\sisetup{
+  detect-all,
+  group-separator={,},
+  group-minimum-digits=4,
+  table-number-alignment=center,
+  table-text-alignment=center
+}
+
+% Optional helpers for advanced tables. Ordinary table + tabular remains the
+% recommended interface; use \toprule, \midrule and \bottomrule when possible.
+\newcolumntype{L}{>{\raggedright\arraybackslash}X}
+\newcolumntype{C}{>{\centering\arraybackslash}X}
+\newcolumntype{R}{>{\raggedleft\arraybackslash}X}
+\newcolumntype{P}[1]{>{\raggedright\arraybackslash}p{#1}}
+
+% Float placement tuned from journal-class practice for long technical works.
+\setcounter{topnumber}{4}
+\setcounter{bottomnumber}{2}
+\setcounter{totalnumber}{6}
+\renewcommand{\topfraction}{0.90}
+\renewcommand{\bottomfraction}{0.80}
+\renewcommand{\textfraction}{0.07}
+\renewcommand{\floatpagefraction}{0.75}
+\renewcommand{\dbltopfraction}{0.90}
+\renewcommand{\dblfloatpagefraction}{0.75}
+\setlength{\floatsep}{0.85\baselineskip plus 0.2\baselineskip minus 0.2\baselineskip}
+\setlength{\textfloatsep}{1.25\baselineskip plus 0.2\baselineskip minus 0.3\baselineskip}
+\setlength{\intextsep}{0.85\baselineskip plus 0.2\baselineskip minus 0.2\baselineskip}
+
+% Theorem families modelled on ACM, numbered by chapter for a thesis.
+\theoremstyle{plain}
+\newtheorem{theorem}{Theorem}[chapter]
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{conjecture}[theorem]{Conjecture}
+\theoremstyle{definition}
+\newtheorem{definition}[theorem]{Definition}
+\newtheorem{assumption}[theorem]{Assumption}
+\newtheorem{example}[theorem]{Example}
+\theoremstyle{remark}
+\newtheorem{remark}[theorem]{Remark}
+
+% Algorithms and source code use the same restrained Liverpool palette.
+\counterwithin{algorithm}{chapter}
+\captionsetup[algorithm]{font=small,labelfont=bf,justification=centering}
+\definecolor{LiverpoolCodeBackground}{HTML}{F5F6FA}
+\definecolor{LiverpoolCodeComment}{HTML}{5B6573}
+\lstdefinestyle{liverpool}{
+  basicstyle=\ttfamily\small,
+  keywordstyle=\color{LiverpoolBlue}\bfseries,
+  commentstyle=\color{LiverpoolCodeComment},
+  stringstyle=\color{LiverpoolGold},
+  backgroundcolor=\color{LiverpoolCodeBackground},
+  frame=single,
+  rulecolor=\color{black!20},
+  numbers=left,
+  numberstyle=\scriptsize\color{LiverpoolCodeComment},
+  numbersep=8pt,
+  breaklines=true,
+  breakatwhitespace=false,
+  showstringspaces=false,
+  keepspaces=true,
+  columns=fullflexible,
+  tabsize=2,
+  captionpos=b
+}
+\lstset{style=liverpool}
+
+% Lists remain compact but retain enough white space for thesis readability.
+\setlist{
+  topsep=0.35\baselineskip,
+  itemsep=0.15\baselineskip,
+  parsep=0pt,
+  partopsep=0pt
+}
+\allowdisplaybreaks[2]
+
+% ---------- Discipline-aware BibTeX selection ----------
+% APA is the safe fallback for general or unrecognised disciplines.
+\def\uolbib@resolvedstyle{apalike}
+\def\uolbib@citationmode{authoryear}
+
+\newcommand*\uolbib@declaremap[3]{%
+  \csdef{uolbib@map@#1}{%
+    \def\uolbib@resolvedstyle{#2}%
+    \def\uolbib@citationmode{#3}%
+  }%
+}
+\newcommand*\uolbib@mapieee[1]{\uolbib@declaremap{#1}{liverpoolthesis}{numeric}}
+\newcommand*\uolbib@mapnumeric[1]{\uolbib@declaremap{#1}{unsrtnat}{numeric}}
+\newcommand*\uolbib@mapapa[1]{\uolbib@declaremap{#1}{apalike}{authoryear}}
+\newcommand*\uolbib@mapauthoryear[1]{\uolbib@declaremap{#1}{plainnat}{authoryear}}
+
+\forcsvlist{\uolbib@mapieee}{engineering,electrical-engineering,electronic-engineering,mechanical-engineering,civil-engineering,aerospace-engineering,chemical-engineering,materials-engineering,biomedical-engineering,systems-engineering,energy-engineering,computer-science,computing,data-science,artificial-intelligence,robotics,telecommunications}
+\forcsvlist{\uolbib@mapnumeric}{physics,astronomy,chemistry,mathematics,statistics,medicine,dentistry,veterinary-science,nursing,pharmacy,public-health,health-sciences,life-sciences,biology,biochemistry,genetics,neuroscience,environmental-science,earth-sciences,geology,ocean-sciences,agriculture,food-science}
+\forcsvlist{\uolbib@mapapa}{general,psychology,education,social-sciences,sociology,anthropology,criminology,politics,international-relations,public-policy,social-work,management,business,marketing,geography,sport-science}
+\forcsvlist{\uolbib@mapauthoryear}{economics,finance,accounting,humanities,history,archaeology,classics,philosophy,literature,languages,linguistics,music,arts,architecture,planning,communication,media-studies,theology}
+\uolbib@declaremap{law}{jurabib}{authortitle}
+
+\ifcsdef{uolbib@map@\uolbib@discipline}
+  {\csuse{uolbib@map@\uolbib@discipline}}
+  {\PackageWarningNoLine{liverpoolthesis}{Unknown discipline
+     `\uolbib@discipline'; using APA}}
+
+% Explicit symbolic or .bst names override the discipline mapping.
+\newcommand*\uolbib@setexplicitstyle[1]{%
+  \ifcsdef{uolbib@style@#1}
+    {\csuse{uolbib@style@#1}}
+    {\def\uolbib@resolvedstyle{#1}}%
+}
+\csdef{uolbib@style@ieee}{\def\uolbib@resolvedstyle{liverpoolthesis}\def\uolbib@citationmode{numeric}}
+\csdef{uolbib@style@numeric-comp}{\def\uolbib@resolvedstyle{unsrtnat}\def\uolbib@citationmode{numeric}}
+\csdef{uolbib@style@apa}{\def\uolbib@resolvedstyle{apalike}\def\uolbib@citationmode{authoryear}}
+\csdef{uolbib@style@authoryear}{\def\uolbib@resolvedstyle{plainnat}\def\uolbib@citationmode{authoryear}}
+\csdef{uolbib@style@authortitle}{\def\uolbib@resolvedstyle{jurabib}\def\uolbib@citationmode{authortitle}}
+\ifdefempty{\uolbib@style}{}{\expandafter\uolbib@setexplicitstyle\expandafter{\uolbib@style}}
+
+\newif\ifuolbib@authortitle
+\ifdefstring{\uolbib@citationmode}{authortitle}
+  {\uolbib@authortitletrue}
+  {\uolbib@authortitlefalse}
+
+\ifuolbib@authortitle
+  \RequirePackage{jurabib}
+  \newcommand*\publication[1]{\fullcite{#1}}
+\else
+  \ifdefstring{\uolbib@citationmode}{numeric}
+    {\PassOptionsToPackage{numbers,square,sort&compress}{natbib}}
+    {\PassOptionsToPackage{authoryear,round}{natbib}}
+  \RequirePackage{natbib}
+  \RequirePackage{bibentry}
+  \newcommand*\publication[1]{%
+    \begingroup
+      \let\hyper@natanchorstart\@gobble
+      \let\hyper@natanchorend\relax
+      \bibentry{#1}%
+    \endgroup
+  }
+\fi
+
+\AtBeginDocument{%
+  \@ifundefined{bibname}{}{\renewcommand*\bibname{References}}%
+  \@ifundefined{refname}{}{\renewcommand*\refname{References}}%
+  \bibliographystyle{\uolbib@resolvedstyle}%
+  \ifuolbib@authortitle\else\nobibliography*\fi
+}
+\newcommand*\thesisbibliographydiscipline{\uolbib@discipline}
+\newcommand*\thesisbibliographystyle{\uolbib@resolvedstyle}
+\PackageInfo{liverpoolthesis}{Discipline `\uolbib@discipline'
+  selected BibTeX style `\uolbib@resolvedstyle'}
+
+\endinput

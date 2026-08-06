@@ -1,0 +1,188 @@
+# ============================================================
+# LaTeX: pdfTeX + BibTeX
+# Keep source files such as .tex, .bib, .cls, .sty, images, and
+# configuration files under version control.
+# ============================================================
+
+# ------------------------------------------------------------
+# Core TeX auxiliary files
+# ------------------------------------------------------------
+*.aux
+*.log
+*.out
+*.toc
+*.lof
+*.lot
+*.fls
+*.fdb_latexmk
+*.synctex
+*.synctex.gz
+*.synctex.gz(busy)
+*.fmt
+*.fot
+*.cb
+*.cb2
+*.xdv
+
+# Additional auxiliary files created by TeX packages
+*.upa
+*.upb
+*.tui
+*.tuc
+*.tmp
+*.temp
+*.bak
+*.backup
+*.sav
+*.save
+*.old
+
+# ------------------------------------------------------------
+# BibTeX
+# ------------------------------------------------------------
+*.bbl
+*.blg
+
+# Files occasionally created by bibliography-related packages
+*.bcf
+*.run.xml
+*-blx.bib
+*.bib.sav
+
+# ------------------------------------------------------------
+# Cross-references, indexes, glossaries, and nomenclature
+# ------------------------------------------------------------
+*.idx
+*.ind
+*.ilg
+*.ist
+*.xdy
+
+*.acn
+*.acr
+*.alg
+*.glg
+*.glo
+*.gls
+*.glsdefs
+*.lzo
+*.lzs
+*.slg
+*.slo
+*.sls
+
+*.nlo
+*.nls
+
+# ------------------------------------------------------------
+# Table of contents and package-specific lists
+# ------------------------------------------------------------
+*.loa
+*.lol
+*.loe
+*.lop
+*.los
+*.maf
+*.mtc
+*.mtc0
+
+# ------------------------------------------------------------
+# Beamer and presentation auxiliary files
+# ------------------------------------------------------------
+*.nav
+*.snm
+*.vrb
+
+# ------------------------------------------------------------
+# minted, listings, and externalized graphics
+# ------------------------------------------------------------
+_minted-*/
+*.pyg
+*.pygtex
+*.pygstyle
+
+*.listing
+*.lol
+
+# TikZ/PGF externalization and temporary graphics
+*.dpth
+*.md5
+*.makefile
+*.dep
+
+# ------------------------------------------------------------
+# Intermediate and legacy output formats
+# ------------------------------------------------------------
+*.dvi
+*.ps
+
+# ------------------------------------------------------------
+# Common build directories
+# ------------------------------------------------------------
+build/
+_build/
+out/
+output/
+aux/
+tmp/
+temp/
+
+# ------------------------------------------------------------
+# TeX editors and IDEs
+# ------------------------------------------------------------
+
+# TeXstudio
+*.txss
+*.txss2
+
+# TeXnicCenter
+*.tps
+
+# Kile
+*.backup
+*.kilepr
+*.kilepr.gui
+
+# LyX temporary files
+*.lyx~
+*.lyx.emergency
+
+# Vim
+*.swp
+*.swo
+*.swn
+*~
+
+# Emacs
+.#*
+\#*\#
+*.elc
+auto/
+
+# VS Code local workspace state
+.vscode/*.log
+.vscode/.ropeproject/
+*.code-workspace
+
+# JetBrains IDEs
+.idea/
+
+# ------------------------------------------------------------
+# Operating-system metadata
+# ------------------------------------------------------------
+.DS_Store
+.AppleDouble
+.LSOverride
+Icon?
+._*
+
+Thumbs.db
+Desktop.ini
+
+# ------------------------------------------------------------
+# Miscellaneous temporary files
+# ------------------------------------------------------------
+*.lock
+*.pid
+*.cache
+*.cache-*
