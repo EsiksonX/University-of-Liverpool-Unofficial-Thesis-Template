@@ -13,9 +13,10 @@
 </p>
 
 <p align="center">
-  <a href="#-build"><img alt="pdfLaTeX and BibTeX" src="https://img.shields.io/badge/build-pdfLaTeX%20%2B%20BibTeX-008080?logo=latex&logoColor=white"></a>
+  <a href="https://www.overleaf.com/latex/templates/university-of-liverpool-unofficial-thesis-template/tgdthwyrbtjx"><img alt="Open in Overleaf" src="https://img.shields.io/badge/Open%20in-Overleaf-47A141?logo=overleaf&logoColor=white"></a>
+  <a href="#-build"><img alt="pdfLaTeX and BibTeX" src="https://img.shields.io/badge/local%20build-pdfLaTeX%20%2B%20BibTeX-008080?logo=latex&logoColor=white"></a>
   <a href="example.pdf"><img alt="Compiled example" src="https://img.shields.io/badge/example-PDF-B30B00?logo=adobeacrobatreader&logoColor=white"></a>
-  <a href="https://www.liverpool.ac.uk/media/livacuk/tqsd/code-of-practice-on-assessment/annex-7.1-PGR-CoP.pdf"><img alt="2025/26 PGR guidance" src="https://img.shields.io/badge/guidance-2025%2F26-101F6B"></a>
+  <a href="https://www.liverpool.ac.uk/media/livacuk/tqsd/code-of-practice-on-assessment/annex-7.1-PGR-CoP.pdf"><img alt="UoL PGR guidance" src="https://img.shields.io/badge/guidance-UoL-101F6B"></a>
   <a href="LICENSE"><img alt="License: CC BY 4.0" src="https://img.shields.io/badge/license-CC%20BY%204.0-B48300"></a>
 </p>
 
@@ -32,13 +33,13 @@
 </p>
 
 <p align="center">
-  <a href="example.pdf">
+  <a href="https://www.liverpool.ac.uk/">
     <img src="uol-figures/campus.jpg" alt="University of Liverpool campus and Victoria Building" width="100%">
   </a>
 </p>
 
 > [!IMPORTANT]
-> This template encodes a consistent interpretation of the University of Liverpool's 2025/26 PGR thesis-formatting guidance. It does not replace the current University guidance, School requirements, or advice from your supervisor. Verify the requirements that apply at the point of submission.
+> This template encodes a consistent interpretation of the University of Liverpool's PGR thesis-formatting guidance. It does not replace the School requirements, or advice from your supervisor. Verify the requirements that apply at the point of submission. If you find any discrepancies between this template and the official guidance, please report them through the Issues.
 
 ## ✨ Highlights
 
@@ -70,7 +71,7 @@
 2. Copy [`example.tex`](example.tex) to a new thesis source, for example `thesis.tex`.
 3. Replace the demonstration metadata and front-matter text.
 4. Select the appropriate `discipline=...` value.
-5. Build with the four-pass pdfLaTeX/BibTeX sequence below.
+5. Build in Overleaf (recommended), or use the local four-pass pdfLaTeX/BibTeX sequence below.
 6. Inspect the final PDF page by page before submission.
 
 A minimal preamble is:
@@ -95,9 +96,15 @@ See [`example.tex`](example.tex) for a complete working document and [`example.p
 
 ## 🛠 Build
 
-### Recommended: pdfLaTeX → BibTeX → pdfLaTeX × 2
+### Recommended: Overleaf
 
-Run the following commands from the repository root:
+Overleaf is the recommended build environment for this template because it provides a consistent TeX installation and runs the required bibliography and cross-reference passes automatically. Import the Overleaf template, then set your thesis source (for example, `thesis.tex`) as the **Main document** and select **pdfLaTeX** as the compiler.
+
+**Overleaf template:** [Open the template in Overleaf](https://www.overleaf.com/latex/templates/university-of-liverpool-unofficial-thesis-template/tgdthwyrbtjx)
+
+### Local build: pdfLaTeX → BibTeX → pdfLaTeX × 2
+
+For local compilation, run the following commands from the repository root:
 
 ```bash
 pdflatex -interaction=nonstopmode -halt-on-error thesis.tex
