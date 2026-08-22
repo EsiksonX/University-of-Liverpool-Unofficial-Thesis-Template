@@ -1,4 +1,4 @@
-\documentclass[12pt,oneside]{liverpoolthesis}
+\documentclass[oneside,header=auto]{liverpoolthesis}
 % Select the discipline once; the template chooses a suitable bibliography
 % style. General or unknown disciplines fall back to APA. An explicit
 % style=... option can override the automatic choice when required.
@@ -75,7 +75,6 @@ The University began as University College, Liverpool in 1881 and was establishe
 
 Figure~\ref{fig:campus} also demonstrates the preferred structure of an ordinary figure: centre the graphic, place the caption below it, and add the label after the caption. Use descriptive captions that allow a reader to understand the figure without searching through the main text.
 
-\clearpage
 \section{Files supplied with the template}
 
 \begin{table}[htbp]
@@ -109,7 +108,7 @@ Keep the class, style, bibliography style and \texttt{uol-figures} directory tog
 The opening block supplies the title-page text and searchable PDF information. Faculty and School names are deliberately configurable and may be left empty if they are not required.
 
 \begin{lstlisting}[language={[LaTeX]TeX}]
-\documentclass[12pt,oneside]{liverpoolthesis}
+\documentclass[oneside,header=right]{liverpoolthesis}
 \usepackage[discipline=computer-science]{liverpoolthesis}
 
 \title{Title of the Thesis}
@@ -125,7 +124,7 @@ The opening block supplies the title-page text and searchable PDF information. F
 \setcounter{secnumdepth}{2} % Use -1 to suppress all heading numbers.
 \end{lstlisting}
 
-For double-sided printing, replace \texttt{oneside} with \texttt{twoside}. The default paragraph style uses first-line indentation. Add the class option \texttt{parskip} if separated paragraphs are preferred consistently throughout the document.
+For double-sided printing, replace the \texttt{oneside} and \texttt{header=right} options with \texttt{twoside} and \texttt{header=outer}; the latter places running heads at the outer edge of each printed page. The alternatives \texttt{header=left}, \texttt{header=right}, \texttt{header=inner} and \texttt{header=outer} select a fixed left position, a fixed right position, odd-left/even-right positions and odd-right/even-left positions respectively. The default \texttt{header=auto} chooses right for \texttt{oneside} and outer for \texttt{twoside}. The same selection can be made in the preamble with, for example, \verb|\thesisheaderstyle{inner}|. Chapter-opening pages retain the conventional header-free plain style.
 
 \section{Front matter}
 
@@ -369,16 +368,13 @@ APA remains the fallback for \texttt{discipline=general} or an unrecognised valu
 
 The selector maps the discipline to the bundled \texttt{liverpoolthesis.bst} or to a standard BibTeX style supplied by the TeX installation. The selected style is written to the auxiliary file automatically, while the references themselves remain in an ordinary \texttt{.bib} database.
 
-Store bibliographic data in \texttt{references.bib}. Cite sources with commands such as \verb|\citep{lamport1994}| or \verb|\citet{lamport1994}|; the resulting entries are formatted consistently rather than typed manually \citep{lamport1994}.
+Store bibliographic data in \texttt{references.bib}. Use \verb|\citep{key}| for a parenthetical citation and \verb|\citet{key}| for a textual citation; the resulting entries are formatted consistently rather than typed manually \citep{lamport1994}.
 
 \section{Printing the reference list}
 
-The following command creates a numbered-free References chapter and includes it in the table of contents:
+The following command creates an unnumbered References chapter. The template automatically starts it on a fresh page, creates the PDF hyperlink target and adds it to the table of contents:
 
 \begin{lstlisting}[language={[LaTeX]TeX}]
-\cleardoublepage
-\phantomsection
-\addcontentsline{toc}{chapter}{References}
 \bibliography{references}
 \end{lstlisting}
 
@@ -426,9 +422,6 @@ Before producing the examination copy, check the following items:
 
 Automated formatting improves consistency but does not validate scholarly content. The candidate remains responsible for accuracy, attribution, accessibility and compliance with the requirements applying at submission.
 
-\cleardoublepage
-\phantomsection
-\addcontentsline{toc}{chapter}{References}
 \bibliography{references}
 
 \appendix
@@ -438,7 +431,7 @@ Automated formatting improves consistency but does not validate scholarly conten
 The following skeleton shows the intended order without the explanatory content used elsewhere in this guide.
 
 \begin{lstlisting}[language={[LaTeX]TeX},caption={Minimal document skeleton.}]
-\documentclass[12pt,oneside]{liverpoolthesis}
+\documentclass[oneside,header=right]{liverpoolthesis}
 \usepackage[discipline=computer-science]{liverpoolthesis}
 
 \begin{document}
@@ -473,9 +466,6 @@ Acknowledgements text.
 \chapter{Introduction}
 Thesis text.
 
-\cleardoublepage
-\phantomsection
-\addcontentsline{toc}{chapter}{References}
 \bibliography{references}
 
 \appendix

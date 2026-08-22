@@ -13,6 +13,7 @@
 </p>
 
 <p align="center">
+  <img alt="Version 1.3" src="https://img.shields.io/badge/version-1.3-101F6B">
   <a href="https://www.overleaf.com/latex/templates/university-of-liverpool-unofficial-thesis-template/tgdthwyrbtjx"><img alt="Open in Overleaf" src="https://img.shields.io/badge/Open%20in-Overleaf-47A141?logo=overleaf&logoColor=white"></a>
   <a href="#-build"><img alt="pdfLaTeX and BibTeX" src="https://img.shields.io/badge/local%20build-pdfLaTeX%20%2B%20BibTeX-008080?logo=latex&logoColor=white"></a>
   <a href="example.pdf"><img alt="Compiled example" src="https://img.shields.io/badge/example-PDF-B30B00?logo=adobeacrobatreader&logoColor=white"></a>
@@ -77,7 +78,7 @@
 A minimal preamble is:
 
 ```latex
-\documentclass[12pt,oneside]{liverpoolthesis}
+\documentclass[oneside,header=right]{liverpoolthesis}
 \usepackage[discipline=computer-science]{liverpoolthesis}
 
 \title{Title of the Thesis}
@@ -160,7 +161,7 @@ The class resolves the logo internally as `uol-figures/logo.png`; do not set the
 ### Class options
 
 ```latex
-\documentclass[12pt,oneside,indent]{liverpoolthesis}
+\documentclass[oneside,indent,header=right]{liverpoolthesis}
 ```
 
 | Option | Effect |
@@ -169,8 +170,13 @@ The class resolves the logo internally as `uol-figures/logo.png`; do not set the
 | `twoside` | Mirrored margins and chapters starting on right-hand pages. |
 | `indent` | Traditional first-line paragraph indentation; this is the default. |
 | `parskip` | Separated paragraphs with no first-line indentation. |
+| `header=auto` | Right-aligned running heads in `oneside`, outer-edge running heads in `twoside`; this is the default. |
+| `header=left` | Place every running head at the left edge. |
+| `header=right` | Place every running head at the right edge. |
+| `header=inner` | Place running heads on the left of odd pages and right of even pages. |
+| `header=outer` | Place running heads on the right of odd pages and left of even pages. |
 
-Other standard `book` class options, such as `10pt`, `11pt`, or `12pt`, are passed through.
+The template defaults to 12pt, so it does not need to be written in the document options. The University requires a clear and consistent font but does not prescribe a particular font size; standard `book` sizes such as `10pt` or `11pt` remain available when a supervisor or School specifically requests one.
 
 ### Metadata commands
 
@@ -254,11 +260,10 @@ Select the discipline once:
 The package writes the selected bibliography style to the auxiliary file automatically. Use standard BibTeX data in `references.bib`, cite with `natbib` commands such as `\citep{...}` and `\citet{...}`, and print the references with:
 
 ```latex
-\cleardoublepage
-\phantomsection
-\addcontentsline{toc}{chapter}{References}
 \bibliography{references}
 ```
+
+The template automatically starts the reference list on a fresh page, creates its PDF hyperlink target and adds `References` to the table of contents.
 
 | Discipline group | Default citation style | BibTeX style |
 |---|---|---|
@@ -380,13 +385,15 @@ The default `liverpool` listings style provides line numbers, restrained colour,
 ### Double-sided printing
 
 ```latex
-\documentclass[12pt,twoside]{liverpoolthesis}
+\documentclass[twoside,header=outer]{liverpoolthesis}
 ```
+
+Use `header=inner` for the reverse alternating arrangement. For a fixed position in an electronic edition, use `header=left` or `header=right`. The equivalent preamble command is `\thesisheaderstyle{left}`, `\thesisheaderstyle{right}`, `\thesisheaderstyle{inner}`, `\thesisheaderstyle{outer}`, or `\thesisheaderstyle{auto}`. Chapter-opening pages remain header-free by convention.
 
 ### Paragraphs separated by space
 
 ```latex
-\documentclass[12pt,oneside,parskip]{liverpoolthesis}
+\documentclass[oneside,parskip,header=right]{liverpoolthesis}
 ```
 
 ### Heading-number depth

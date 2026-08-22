@@ -1,16 +1,22 @@
 % University of Liverpool PGR thesis class
-% Version 1.2 (2026-07-31)
+% Version 1.3 (2026-08-22)
 \NeedsTeXFormat{LaTeX2e}
-\ProvidesClass{liverpoolthesis}[2026/07/31 v1.2 University of Liverpool thesis class]
+\ProvidesClass{liverpoolthesis}[2026/08/22 v1.3 University of Liverpool thesis class]
 
 \newif\if@uol@twoside
 \@uol@twosidefalse
 \newif\if@uol@parskip
 \@uol@parskipfalse
+\def\@uol@headerstyle{auto}
 \DeclareOption{twoside}{\@uol@twosidetrue\PassOptionsToClass{twoside,openright}{book}}
 \DeclareOption{oneside}{\@uol@twosidefalse\PassOptionsToClass{oneside,openany}{book}}
 \DeclareOption{parskip}{\@uol@parskiptrue}
 \DeclareOption{indent}{\@uol@parskipfalse}
+\DeclareOption{header=auto}{\def\@uol@headerstyle{auto}}
+\DeclareOption{header=left}{\def\@uol@headerstyle{left}}
+\DeclareOption{header=right}{\def\@uol@headerstyle{right}}
+\DeclareOption{header=inner}{\def\@uol@headerstyle{inner}}
+\DeclareOption{header=outer}{\def\@uol@headerstyle{outer}}
 \DeclareOption*{\PassOptionsToClass{\CurrentOption}{book}}
 \ExecuteOptions{12pt,oneside,indent}
 \ProcessOptions\relax
@@ -142,29 +148,53 @@
 \newenvironment{dedication}{\cleardoublepage\thispagestyle{plain}\null\vfill\begin{center}\itshape}{\end{center}\vfill\null\clearpage}
 
 % The University requires all separate thesis sections to be identified in the
-% table of contents. Standard book.cls omits these two lists, so add them here.
-\let\@uol@listoffigures\listoffigures
-\renewcommand{\listoffigures}{%
-  \cleardoublepage\phantomsection
-  \addcontentsline{toc}{chapter}{\listfigurename}%
-  \@uol@listoffigures
-}
-\let\@uol@listoftables\listoftables
-\renewcommand{\listoftables}{%
-  \cleardoublepage\phantomsection
-  \addcontentsline{toc}{chapter}{\listtablename}%
-  \@uol@listoftables
-}
+% table of contents. Insert each entry immediately after the standard book.cls
+% heading so that book.cls remains responsible for the single required page
+% break.
+\patchcmd{\listoffigures}
+  {\chapter*{\listfigurename}}
+  {\chapter*{\listfigurename}\phantomsection
+   \addcontentsline{toc}{chapter}{\listfigurename}}
+  {}
+  {\ClassWarning{liverpoolthesis}{Could not add List of Figures to the table of contents}}
+\patchcmd{\listoftables}
+  {\chapter*{\listtablename}}
+  {\chapter*{\listtablename}\phantomsection
+   \addcontentsline{toc}{chapter}{\listtablename}}
+  {}
+  {\ClassWarning{liverpoolthesis}{Could not add List of Tables to the table of contents}}
 
 \pagestyle{fancy}
-\fancyhf{}
-\if@uol@twoside
-  \fancyhead[LE]{\nouppercase{\leftmark}}
-  \fancyhead[RO]{\nouppercase{\rightmark}}
-\else
-  \fancyhead[R]{\nouppercase{\leftmark}}
-\fi
-\fancyfoot[C]{\thepage}
+\newcommand{\@uol@headertext}{\nouppercase{\leftmark}}
+\newcommand{\@uol@header@left}{\fancyhead[L]{\@uol@headertext}}
+\newcommand{\@uol@header@right}{\fancyhead[R]{\@uol@headertext}}
+% On recto (odd) pages the inner edge is left and the outer edge is right;
+% the positions reverse on verso (even) pages.
+\newcommand{\@uol@header@inner}{%
+  \fancyhead[L]{\ifodd\value{page}\@uol@headertext\fi}%
+  \fancyhead[R]{\ifodd\value{page}\else\@uol@headertext\fi}%
+}
+\newcommand{\@uol@header@outer}{%
+  \fancyhead[L]{\ifodd\value{page}\else\@uol@headertext\fi}%
+  \fancyhead[R]{\ifodd\value{page}\@uol@headertext\fi}%
+}
+\newcommand{\@uol@header@auto}{%
+  \if@uol@twoside\@uol@header@outer\else\@uol@header@right\fi
+}
+\newcommand{\@uol@applyheaderstyle}{%
+  \fancyhf{}%
+  \ifcsdef{@uol@header@\@uol@headerstyle}
+    {\csuse{@uol@header@\@uol@headerstyle}}
+    {\ClassError{liverpoolthesis}{Unknown header style `\@uol@headerstyle'}
+       {Use auto, left, right, inner or outer.}%
+     \@uol@header@auto}%
+  \fancyfoot[C]{\thepage}%
+}
+\newcommand{\thesisheaderstyle}[1]{%
+  \gdef\@uol@headerstyle{#1}%
+  \@uol@applyheaderstyle
+}
+\@uol@applyheaderstyle
 \renewcommand{\headrulewidth}{0.4pt}
 \fancypagestyle{plain}{%
   \fancyhf{}
@@ -189,7 +219,7 @@
     pdftitle={\@title},
     pdfsubject={\@thesissubject},
     pdfkeywords={\@thesiskeywords},
-    pdfcreator={LaTeX with liverpoolthesis, hyperref and biblatex}%
+    pdfcreator={LaTeX with liverpoolthesis, hyperref and BibTeX}%
   }%
 }
 \makeatother

@@ -1,6 +1,6 @@
 % Companion visual style for liverpoolthesis.cls
 \NeedsTeXFormat{LaTeX2e}
-\ProvidesPackage{liverpoolthesis}[2026/07/31 v2.0 Liverpool thesis style]
+\ProvidesPackage{liverpoolthesis}[2026/08/22 v1.3 Liverpool thesis style]
 
 \RequirePackage{kvoptions}
 \SetupKeyvalOptions{family=uolbib,prefix=uolbib@}
@@ -204,6 +204,15 @@
   \@ifundefined{refname}{}{\renewcommand*\refname{References}}%
   \bibliographystyle{\uolbib@resolvedstyle}%
   \ifuolbib@authortitle\else\nobibliography*\fi
+  % Keep the user source concise: every bibliography starts on a fresh page,
+  % receives a hyperlink target, and is added to the table of contents.
+  \let\uolbib@originalbibliography\bibliography
+  \renewcommand*\bibliography[1]{%
+    \cleardoublepage
+    \phantomsection
+    \addcontentsline{toc}{chapter}{\bibname}%
+    \uolbib@originalbibliography{#1}%
+  }%
 }
 \newcommand*\thesisbibliographydiscipline{\uolbib@discipline}
 \newcommand*\thesisbibliographystyle{\uolbib@resolvedstyle}
