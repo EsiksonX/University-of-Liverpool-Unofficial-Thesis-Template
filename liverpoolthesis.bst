@@ -1192,7 +1192,11 @@ FUNCTION {if.url.alt.interword.spacing}
 FUNCTION {if.url.std.interword.spacing}
 { is.use.alt.interword.spacing
     { is.use.url
-        { url empty$ 'skip$ {"\BIBentrySTDinterwordspacing" write$ newline$} if$ }
+        % Preserve a space before the paragraph break: bibentry includes that
+        % space in the delimiter it uses while parsing each \bibitem.  A bare
+        % control word here consumes the line ending and makes URL entries fail
+        % with "Paragraph ended before \BR@c@bibitem was complete".
+        { url empty$ 'skip$ {"\BIBentrySTDinterwordspacing{}" write$ newline$} if$ }
         { skip$ }
       if$
     }
