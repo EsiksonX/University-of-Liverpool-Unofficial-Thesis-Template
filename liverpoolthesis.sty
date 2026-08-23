@@ -50,6 +50,12 @@
   {\theparagraph}{0.75em}{}[.]
 \titlespacing*{\paragraph}{0pt}{1.25ex plus .4ex minus .2ex}{0.75em}
 
+% titlesec installs its own chapter command. Restore the thesis selector after
+% defining the visual rules so the documented six heading modes remain active.
+\renewcommand{\uol@chapterheadingfont}{\normalfont\Huge\bfseries\color{LiverpoolBlue}}
+\uol@restorechapterselector
+\AtBeginDocument{\uol@restorechapterselector}
+
 \captionsetup{font=small,labelfont=bf,justification=centering}
 \captionsetup[table]{position=top,skip=6pt}
 \captionsetup[figure]{position=bottom,skip=6pt}

@@ -39,6 +39,115 @@
 \RequirePackage{hyperref}
 \RequirePackage{bookmark}
 
+% Thesis heading-number selector. The public secnumdepth values intentionally
+% provide separate chapterless and chapter-based sequences:
+% -1 none; 0 section; 1 section/subsection; 2 chapter;
+% 3 chapter/section; 4 chapter/section/subsection.
+\newif\ifuol@numberchapters
+\newcount\uol@secnumdepth
+\let\uol@latex@setcounter\setcounter
+\newcommand{\uol@setsecnumdepth}[1]{%
+  \uol@secnumdepth=#1\relax
+  \ifcase\numexpr\uol@secnumdepth+1\relax
+    \uol@numberchaptersfalse
+    \uol@latex@setcounter{secnumdepth}{-1}%
+  \or
+    \uol@numberchaptersfalse
+    \renewcommand{\thesection}{\arabic{section}}%
+    \renewcommand{\thesubsection}{\thesection.\arabic{subsection}}%
+    \uol@latex@setcounter{secnumdepth}{1}%
+  \or
+    \uol@numberchaptersfalse
+    \renewcommand{\thesection}{\arabic{section}}%
+    \renewcommand{\thesubsection}{\thesection.\arabic{subsection}}%
+    \uol@latex@setcounter{secnumdepth}{2}%
+  \or
+    \uol@numberchapterstrue
+    \renewcommand{\thesection}{\thechapter.\arabic{section}}%
+    \renewcommand{\thesubsection}{\thesection.\arabic{subsection}}%
+    \uol@latex@setcounter{secnumdepth}{0}%
+  \or
+    \uol@numberchapterstrue
+    \renewcommand{\thesection}{\thechapter.\arabic{section}}%
+    \renewcommand{\thesubsection}{\thesection.\arabic{subsection}}%
+    \uol@latex@setcounter{secnumdepth}{1}%
+  \or
+    \uol@numberchapterstrue
+    \renewcommand{\thesection}{\thechapter.\arabic{section}}%
+    \renewcommand{\thesubsection}{\thesection.\arabic{subsection}}%
+    \uol@latex@setcounter{secnumdepth}{2}%
+  \else
+    \ClassError{liverpoolthesis}{Invalid secnumdepth value `#1'}{Use -1, 0, 1, 2, 3 or 4.}%
+  \fi
+}
+\newcommand{\uol@installsetcounter}{%
+  \renewcommand{\setcounter}[2]{%
+    \ifstrequal{##1}{secnumdepth}
+      {\uol@setsecnumdepth{##2}}
+      {\uol@latex@setcounter{##1}{##2}}%
+  }%
+}
+\uol@installsetcounter
+\uol@setsecnumdepth{4}
+
+% Packages such as calc may replace \setcounter while the preamble is being
+% read. Capture the author's final requested value and reinstall the selector
+% before the document begins.
+\AtBeginDocument{%
+  \edef\uol@requestedsecnumdepth{\number\c@secnumdepth}%
+  \expandafter\uol@setsecnumdepth\expandafter{\uol@requestedsecnumdepth}%
+  \uol@installsetcounter
+}
+
+% Apply the selector to chapter contents entries and printed chapter heads.
+% In chapterless modes a hidden chapter step resets section counters and keeps
+% hyperlink destinations unique, while no chapter number is printed.
+\let\uol@book@chapter\chapter
+\newcommand{\uol@chapterheadingfont}{\normalfont\Huge\bfseries}
+\def\@chapter[#1]#2{%
+  \ifuol@numberchapters
+    \if@mainmatter
+      \refstepcounter{chapter}%
+      \typeout{\@chapapp\space\thechapter.}%
+      \addcontentsline{toc}{chapter}{\protect\numberline{\thechapter}#1}%
+    \else
+      \addcontentsline{toc}{chapter}{#1}%
+    \fi
+  \else
+    \if@mainmatter\stepcounter{chapter}\fi
+    \addcontentsline{toc}{chapter}{#1}%
+  \fi
+  \chaptermark{#1}%
+  \addtocontents{lof}{\protect\addvspace{10\p@}}%
+  \addtocontents{lot}{\protect\addvspace{10\p@}}%
+  \if@twocolumn
+    \@topnewpage[\@makechapterhead{#2}]%
+  \else
+    \@makechapterhead{#2}%
+    \@afterheading
+  \fi
+}
+\renewcommand{\@makechapterhead}[1]{%
+  \vspace*{50\p@}%
+  {\parindent \z@ \raggedright \uol@chapterheadingfont
+    \ifuol@numberchapters
+      \if@mainmatter
+        \thechapter.\hspace{0.75em}%
+      \fi
+    \fi
+    \interlinepenalty\@M
+    #1\par\nobreak
+    \vskip 40\p@
+  }%
+}
+\let\uol@thesis@chapter\@chapter
+\let\uol@thesis@makechapterhead\@makechapterhead
+\newcommand{\uol@restorechapterselector}{%
+  \let\chapter\uol@book@chapter
+  \let\@chapter\uol@thesis@chapter
+  \let\@makechapterhead\uol@thesis@makechapterhead
+}
+
 % ACM-style searchable/copyable PDF text when compiling with pdfLaTeX.
 \RequirePackage{iftex}
 \ifPDFTeX

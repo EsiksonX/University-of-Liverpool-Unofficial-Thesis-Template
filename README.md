@@ -90,7 +90,7 @@ A minimal preamble is:
 \subject{Short description of the research}
 \keywords{keyword one, keyword two, keyword three}
 
-\setcounter{secnumdepth}{2}
+\setcounter{secnumdepth}{4}
 ```
 
 See [`example.tex`](example.tex) for a complete working document and [`example.pdf`](example.pdf) for the compiled result.
@@ -399,10 +399,12 @@ Use `header=inner` for the reverse alternating arrangement. For a fixed position
 ### Heading-number depth
 
 ```latex
-\setcounter{secnumdepth}{2}  % chapters, sections, and subsections
-\setcounter{secnumdepth}{1}  % chapters and sections
-\setcounter{secnumdepth}{0}  % chapters only
 \setcounter{secnumdepth}{-1} % no heading numbers
+\setcounter{secnumdepth}{0}  % sections only
+\setcounter{secnumdepth}{1}  % sections and subsections
+\setcounter{secnumdepth}{2}  % chapters only
+\setcounter{secnumdepth}{3}  % chapters and sections
+\setcounter{secnumdepth}{4}  % chapters, sections, and subsections (default)
 ```
 
 ### Appendices after references

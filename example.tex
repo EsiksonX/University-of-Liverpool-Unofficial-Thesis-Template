@@ -4,9 +4,9 @@
 % style=... option can override the automatic choice when required.
 \usepackage[discipline=computer-science]{liverpoolthesis}
 
-% Controls whether heading numbers are printed. The default 2 numbers chapters,
+% Controls which heading levels are numbered. The default 4 numbers chapters,
 % sections and subsections; use -1 to suppress all heading numbers.
-\setcounter{secnumdepth}{2} % May be changed if fewer heading levels are desired.
+\setcounter{secnumdepth}{4}
 
 % ---------- Template-documentation metadata ----------
 \title{University of Liverpool PhD Thesis LaTeX Template Guide}
@@ -121,7 +121,7 @@ The opening block supplies the title-page text and searchable PDF information. F
 \keywords{keyword one, keyword two, keyword three}
 
 % Default: numbered chapters, sections and subsections.
-\setcounter{secnumdepth}{2} % Use -1 to suppress all heading numbers.
+\setcounter{secnumdepth}{4} % Use -1 to suppress all heading numbers.
 \end{lstlisting}
 
 For double-sided printing, replace the \texttt{oneside} and \texttt{header=right} options with \texttt{twoside} and \texttt{header=outer}; the latter places running heads at the outer edge of each printed page. The alternatives \texttt{header=left}, \texttt{header=right}, \texttt{header=inner} and \texttt{header=outer} select a fixed left position, a fixed right position, odd-left/even-right positions and odd-right/even-left positions respectively. The default \texttt{header=auto} chooses right for \texttt{oneside} and outer for \texttt{twoside}. The same selection can be made in the preamble with, for example, \verb|\thesisheaderstyle{inner}|. Chapter-opening pages retain the conventional header-free plain style.
@@ -173,7 +173,7 @@ Each included file should normally begin with \verb|\chapter{...}| and should no
 
 Use numbered \verb|\chapter|, \verb|\section| and \verb|\subsection| commands to express the logical hierarchy. Avoid manual font-size and colour commands in headings: the style file applies the Liverpool blue hierarchy consistently and creates navigable PDF bookmarks.
 
-The preamble setting \verb|\setcounter{secnumdepth}{2}| prints numbers on chapters, sections and subsections. Thus \verb|\chapter{Introduction}| begins with ``1. Introduction''. Use 1 to stop numbering after sections, 0 to number chapters only, or $-1$ to suppress all heading numbers.
+The preamble setting \verb|\setcounter{secnumdepth}{4}| prints numbers on chapters, sections and subsections. Thus \verb|\chapter{Introduction}| begins with ``1. Introduction''. Use 3 for chapters and sections, 2 for chapters only, 1 for sections and subsections without chapter numbers, 0 for sections only, or $-1$ to suppress all heading numbers.
 
 Start a new paragraph with a blank source line. Do not use repeated line breaks or manual vertical space to imitate paragraph spacing. The class also applies widow and orphan control, restrained emergency line breaking, and consistent spacing around displayed material.
 
