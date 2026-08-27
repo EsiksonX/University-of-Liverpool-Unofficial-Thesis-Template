@@ -1,6 +1,6 @@
 % Companion visual style for liverpoolthesis.cls
 \NeedsTeXFormat{LaTeX2e}
-\ProvidesPackage{liverpoolthesis}[2026/08/22 v1.3 Liverpool thesis style]
+\ProvidesPackage{liverpoolthesis}[2026/08/27 v1.4 Liverpool thesis style]
 
 \RequirePackage{kvoptions}
 \SetupKeyvalOptions{family=uolbib,prefix=uolbib@}
@@ -42,9 +42,11 @@
 \titleformat{\section}
   {\normalfont\Large\bfseries\color{LiverpoolBlue}}
   {\thesection}{0.75em}{}
+\titlespacing*{\section}{0pt}{2.6ex plus 0.8ex minus 0.4ex}{1.2ex plus 0.3ex minus 0.2ex}
 \titleformat{\subsection}
   {\normalfont\large\bfseries\color{LiverpoolBlue}}
   {\thesubsection}{0.75em}{}
+\titlespacing*{\subsection}{0pt}{2.1ex plus 0.6ex minus 0.3ex}{0.9ex plus 0.25ex minus 0.15ex}
 \titleformat{\paragraph}[runin]
   {\normalfont\normalsize\bfseries}
   {\theparagraph}{0.75em}{}[.]
@@ -56,7 +58,8 @@
 \uol@restorechapterselector
 \AtBeginDocument{\uol@restorechapterselector}
 
-\captionsetup{font=small,labelfont=bf,justification=centering}
+% Centre captions that fit on one line and left-align longer captions.
+\captionsetup{font=small,labelfont=bf,justification=raggedright,singlelinecheck=true}
 \captionsetup[table]{position=top,skip=6pt}
 \captionsetup[figure]{position=bottom,skip=6pt}
 \renewcommand{\arraystretch}{1.15}
@@ -92,6 +95,9 @@
 \setlength{\floatsep}{0.85\baselineskip plus 0.2\baselineskip minus 0.2\baselineskip}
 \setlength{\textfloatsep}{1.25\baselineskip plus 0.2\baselineskip minus 0.3\baselineskip}
 \setlength{\intextsep}{0.85\baselineskip plus 0.2\baselineskip minus 0.2\baselineskip}
+\setlength{\@fptop}{0pt plus 1fil}
+\setlength{\@fpsep}{0.8\baselineskip plus 2fil}
+\setlength{\@fpbot}{0pt plus 1fil}
 
 % Theorem families modelled on ACM, numbered by chapter for a thesis.
 \theoremstyle{plain}
@@ -109,7 +115,7 @@
 
 % Algorithms and source code use the same restrained Liverpool palette.
 \counterwithin{algorithm}{chapter}
-\captionsetup[algorithm]{font=small,labelfont=bf,justification=centering}
+\captionsetup[algorithm]{font=small,labelfont=bf,justification=raggedright,singlelinecheck=true}
 \definecolor{LiverpoolCodeBackground}{HTML}{F5F6FA}
 \definecolor{LiverpoolCodeComment}{HTML}{5B6573}
 \lstdefinestyle{liverpool}{
@@ -154,7 +160,7 @@
   }%
 }
 \newcommand*\uolbib@mapieee[1]{\uolbib@declaremap{#1}{liverpoolthesis}{numeric}}
-\newcommand*\uolbib@mapnumeric[1]{\uolbib@declaremap{#1}{unsrtnat}{numeric}}
+\newcommand*\uolbib@mapnumeric[1]{\uolbib@declaremap{#1}{plainnat}{numeric}}
 \newcommand*\uolbib@mapapa[1]{\uolbib@declaremap{#1}{apalike}{authoryear}}
 \newcommand*\uolbib@mapauthoryear[1]{\uolbib@declaremap{#1}{plainnat}{authoryear}}
 
@@ -176,7 +182,7 @@
     {\def\uolbib@resolvedstyle{#1}}%
 }
 \csdef{uolbib@style@ieee}{\def\uolbib@resolvedstyle{liverpoolthesis}\def\uolbib@citationmode{numeric}}
-\csdef{uolbib@style@numeric-comp}{\def\uolbib@resolvedstyle{unsrtnat}\def\uolbib@citationmode{numeric}}
+\csdef{uolbib@style@numeric-comp}{\def\uolbib@resolvedstyle{plainnat}\def\uolbib@citationmode{numeric}}
 \csdef{uolbib@style@apa}{\def\uolbib@resolvedstyle{apalike}\def\uolbib@citationmode{authoryear}}
 \csdef{uolbib@style@authoryear}{\def\uolbib@resolvedstyle{plainnat}\def\uolbib@citationmode{authoryear}}
 \csdef{uolbib@style@authortitle}{\def\uolbib@resolvedstyle{jurabib}\def\uolbib@citationmode{authortitle}}

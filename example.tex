@@ -69,7 +69,7 @@ The University began as University College, Liverpool in 1881 and was establishe
 \begin{figure}[htbp]
   \centering
   \includegraphics[width=\textwidth]{uol-figures/campus.jpg}
-  \caption{The University of Liverpool campus and the Victoria Building.}
+  \caption[University of Liverpool campus]{The University of Liverpool campus and the Victoria Building.}
   \label{fig:campus}
 \end{figure}
 
@@ -79,7 +79,7 @@ Figure~\ref{fig:campus} also demonstrates the preferred structure of an ordinary
 
 \begin{table}[htbp]
   \centering
-  \caption{Principal files and their roles.}
+  \caption[Principal template files]{Principal files supplied with the template and their respective roles.}
   \label{tab:files}
   \begin{tabular}{p{0.30\textwidth}p{0.60\textwidth}}
     \toprule
@@ -215,24 +215,24 @@ Numbered theorem-style variants are available for lemmas, propositions, corollar
 
 \section{Figures}
 
-Use common PDF, PNG or JPEG graphics and size them relative to \verb|\textwidth| or \verb|\linewidth|. Preserve the image aspect ratio and ensure labels remain legible at the final printed size. Every figure must be mentioned in the text, numbered, captioned and supplied with alternative explanation in the surrounding prose where accessibility requires it.
+Use common PDF, PNG or JPEG graphics and size them relative to \verb|\textwidth| or \verb|\linewidth|. Preserve the image aspect ratio and ensure labels remain legible at the final printed size. Every figure must be mentioned in the text, numbered, captioned and supplied with alternative explanation in the surrounding prose where accessibility requires it. Write \verb|\caption[Short title]{Full descriptive caption}| when a concise entry is needed in the List of Figures; the optional text appears in the list, while the full caption remains with the figure.
 
 \begin{lstlisting}[language={[LaTeX]TeX},caption={Standard figure syntax.}]
 \begin{figure}[htbp]
   \centering
   \includegraphics[width=0.85\textwidth]{figures/result.pdf}
-  \caption{A self-contained description of the result.}
+  \caption[Short result title]{A self-contained description of the result.}
   \label{fig:result}
 \end{figure}
 \end{lstlisting}
 
 \section{Tables}
 
-Use ordinary \texttt{table} and \texttt{tabular} environments. Captions appear above tables automatically. The \texttt{booktabs} rules produce a clear journal-style table without vertical lines, as demonstrated in Table~\ref{tab:comparison}.
+Use ordinary \texttt{table} and \texttt{tabular} environments. Captions appear above tables automatically. Use \verb|\caption[Short title]{Full descriptive caption}| to place the short title in the List of Tables and the full caption above the table. A caption that fits on one line is centred automatically; a caption that wraps onto multiple lines is left-aligned. The \texttt{booktabs} rules produce a clear journal-style table without vertical lines, as demonstrated in Table~\ref{tab:comparison}.
 
 \begin{table}[htbp]
   \centering
-  \caption{Example comparison using ordinary table syntax.}
+  \caption[Comparison of methods]{Comparison of baseline and proposed methods using ordinary table syntax, with accuracy, execution time and a concise interpretation reported for each method.}
   \label{tab:comparison}
   \begin{tabular}{lrrl}
     \toprule
@@ -368,7 +368,7 @@ APA remains the fallback for \texttt{discipline=general} or an unrecognised valu
 
 The selector maps the discipline to the bundled \texttt{liverpoolthesis.bst} or to a standard BibTeX style supplied by the TeX installation. The selected style is written to the auxiliary file automatically, while the references themselves remain in an ordinary \texttt{.bib} database.
 
-Store bibliographic data in \texttt{references.bib}. Use \verb|\citep{key}| for a parenthetical citation and \verb|\citet{key}| for a textual citation; the resulting entries are formatted consistently rather than typed manually \citep{lamport1994}.
+Store bibliographic data in \texttt{references.bib}. Use \verb|\citep{key}| for a parenthetical citation and \verb|\citet{key}| for a textual citation; the resulting entries are formatted consistently rather than typed manually \citep{lamport1994}. Numeric bibliographies use ACM-style author/year/title sorting rather than assigning bibliography numbers by first appearance, and groups of numeric citations are automatically sorted and compressed.
 
 \section{Printing the reference list}
 

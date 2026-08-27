@@ -13,7 +13,7 @@
 </p>
 
 <p align="center">
-  <img alt="Version 1.3" src="https://img.shields.io/badge/version-1.3-101F6B">
+  <img alt="Version 1.4" src="https://img.shields.io/badge/version-1.4-101F6B">
   <a href="https://www.overleaf.com/latex/templates/university-of-liverpool-unofficial-thesis-template/tgdthwyrbtjx"><img alt="Open in Overleaf" src="https://img.shields.io/badge/Open%20in-Overleaf-47A141?logo=overleaf&logoColor=white"></a>
   <a href="#-build"><img alt="pdfLaTeX and BibTeX" src="https://img.shields.io/badge/local%20build-pdfLaTeX%20%2B%20BibTeX-008080?logo=latex&logoColor=white"></a>
   <a href="example.pdf"><img alt="Compiled example" src="https://img.shields.io/badge/example-PDF-B30B00?logo=adobeacrobatreader&logoColor=white"></a>
@@ -265,10 +265,12 @@ The package writes the selected bibliography style to the auxiliary file automat
 
 The template automatically starts the reference list on a fresh page, creates its PDF hyperlink target and adds `References` to the table of contents.
 
+Numeric reference lists follow ACM-style author/year/title ordering rather than assigning bibliography numbers by first appearance. Multiple numeric citations at the same point are sorted and compressed automatically. Author-year styles retain their normal alphabetical ordering.
+
 | Discipline group | Default citation style | BibTeX style |
 |---|---|---|
 | Engineering, computing, and technology | IEEE numeric | bundled `liverpoolthesis.bst` |
-| Medicine, health, and natural sciences | Compact numeric | `unsrtnat` |
+| Medicine, health, and natural sciences | Sorted compact numeric | `plainnat` |
 | Psychology, education, management, and social sciences | APA author–year | `apalike` |
 | Economics, humanities, and arts | Author–year | `plainnat` |
 | Law | Author–title | `jurabib` |
@@ -348,12 +350,12 @@ A List of Publications does not by itself constitute a thesis incorporating publ
 
 ### Journal-style tables
 
-Use standard LaTeX table syntax. Table captions are placed above the table, and `booktabs` rules are available by default:
+Use standard LaTeX table syntax. Table captions are placed above the table, and `booktabs` rules are available by default. Use `\caption[Short title]{Full descriptive caption}` when the List of Tables needs a concise entry; the same syntax applies to figures and the List of Figures. Captions that fit on one line are centred automatically, while captions that wrap over multiple lines are left-aligned:
 
 ```latex
 \begin{table}[htbp]
   \centering
-  \caption{Example comparison.}
+  \caption[Comparison of methods]{Example comparison using ordinary table syntax.}
   \label{tab:comparison}
   \begin{tabular}{lrr}
     \toprule
@@ -367,6 +369,8 @@ Use standard LaTeX table syntax. Table captions are placed above the table, and 
 ```
 
 Advanced tables can use `tabularx`, `longtable`, `threeparttable`, `siunitx` `S` columns, flexible `L`/`C`/`R` columns, or `P{width}` columns.
+
+Paragraph, heading and float spacing uses flexible stretch and shrink components. LaTeX therefore balances each page automatically while preserving the template's preferred spacing between paragraphs, headings, text, figures and tables; authors do not need to insert manual `\vspace` commands.
 
 ### Theorems and proofs
 

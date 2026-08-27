@@ -2651,8 +2651,7 @@ FUNCTION {presort}
       label sortify
       "    "
       *
-      seq.num #1 + 'seq.num :=
-      seq.num  int.to.fix
+      title empty.field.to.null.string sortify
     }
   if$
   'sort.label :=
@@ -2708,7 +2707,12 @@ FUNCTION {reverse.pass}
 }
 
 FUNCTION {bib.sort.order}
-{ sort.label  'sort.key$ :=
+{ label sortify
+  "    "
+  *
+  title empty.field.to.null.string sortify
+  *
+  'sort.key$ :=
 }
 % END sort code based on unsrtnat.bst
 

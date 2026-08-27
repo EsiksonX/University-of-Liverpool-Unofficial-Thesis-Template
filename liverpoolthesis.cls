@@ -1,7 +1,7 @@
 % University of Liverpool PGR thesis class
-% Version 1.3 (2026-08-22)
+% Version 1.4 (2026-08-27)
 \NeedsTeXFormat{LaTeX2e}
-\ProvidesClass{liverpoolthesis}[2026/08/22 v1.3 University of Liverpool thesis class]
+\ProvidesClass{liverpoolthesis}[2026/08/27 v1.4 University of Liverpool thesis class]
 
 \newif\if@uol@twoside
 \@uol@twosidefalse
@@ -179,6 +179,8 @@
 \brokenpenalty=5000
 \interfootnotelinepenalty=10000
 \setlength{\emergencystretch}{2em}
+% Preserve a natural baseline rhythm on sparse pages; flexible heading and
+% float skips still let TeX balance the material that is present.
 \raggedbottom
 
 \makeatletter
