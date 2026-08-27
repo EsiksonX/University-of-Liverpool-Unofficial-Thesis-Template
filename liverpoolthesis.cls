@@ -114,9 +114,16 @@
       \addcontentsline{toc}{chapter}{#1}%
     \fi
   \else
-    \if@mainmatter\stepcounter{chapter}\fi
+    % Even when chapter numbers are hidden, make the chapter counter the
+    % current reference target.  A plain \stepcounter leaves \@currentlabel
+    % (and the hyperlink anchor) pointing at the preceding section, so a
+    % \label immediately after \chapter incorrectly records that section.
+    \if@mainmatter\refstepcounter{chapter}\fi
     \addcontentsline{toc}{chapter}{#1}%
   \fi
+  % This class replaces book's \@chapter after nameref/hyperref has patched
+  % it, so restore the chapter-title metadata used by \nameref and PDF links.
+  \NR@gettitle{#2}%
   \chaptermark{#1}%
   \addtocontents{lof}{\protect\addvspace{10\p@}}%
   \addtocontents{lot}{\protect\addvspace{10\p@}}%
