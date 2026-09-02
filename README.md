@@ -99,6 +99,9 @@ See [`example.tex`](example.tex) for a complete working document and [`example.p
 
 ### Recommended: Overleaf
 
+> [!CAUTION]
+> Because Overleaf’s template review process can take some time, the version available on Overleaf Gallery may not always be the latest. Before using the template, please check that the version number in the `.cls` file matches the latest release on the GitHub repository. If the versions differ, you can download the latest release from GitHub and upload it to Overleaf manually.
+
 Overleaf is the recommended build environment for this template because it provides a consistent TeX installation and runs the required bibliography and cross-reference passes automatically. Import the Overleaf template, then set your thesis source (for example, `thesis.tex`) as the **Main document** and select **pdfLaTeX** as the compiler.
 
 **Overleaf template:** [Open the template in Overleaf](https://www.overleaf.com/latex/templates/university-of-liverpool-unofficial-thesis-template/tgdthwyrbtjx)
