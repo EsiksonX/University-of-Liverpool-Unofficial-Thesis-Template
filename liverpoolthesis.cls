@@ -1,7 +1,7 @@
 % University of Liverpool PGR thesis class
-% Version 1.4 (2026-08-27)
+% Version 1.5 (2026-09-02)
 \NeedsTeXFormat{LaTeX2e}
-\ProvidesClass{liverpoolthesis}[2026/08/27 v1.4 University of Liverpool thesis class]
+\ProvidesClass{liverpoolthesis}[2026/09/02 v1.5 University of Liverpool thesis class]
 
 \newif\if@uol@twoside
 \@uol@twosidefalse
@@ -17,10 +17,15 @@
 \DeclareOption{header=right}{\def\@uol@headerstyle{right}}
 \DeclareOption{header=inner}{\def\@uol@headerstyle{inner}}
 \DeclareOption{header=outer}{\def\@uol@headerstyle{outer}}
+% The University thesis body size is fixed here rather than exposed as an
+% author option.
+\DeclareOption{10pt}{\ClassWarning{liverpoolthesis}{The 10pt option is ignored; the thesis uses 12pt}}
+\DeclareOption{11pt}{\ClassWarning{liverpoolthesis}{The 11pt option is ignored; the thesis uses 12pt}}
+\DeclareOption{12pt}{}
 \DeclareOption*{\PassOptionsToClass{\CurrentOption}{book}}
-\ExecuteOptions{12pt,oneside,indent}
+\ExecuteOptions{oneside,indent}
 \ProcessOptions\relax
-\LoadClass[a4paper]{book}
+\LoadClass[12pt,a4paper]{book}
 
 \RequirePackage[T1]{fontenc}
 \RequirePackage[utf8]{inputenc}
@@ -36,6 +41,9 @@
 \RequirePackage{etoolbox}
 \RequirePackage{fancyhdr}
 \RequirePackage{xurl}
+% Flush-left hanging footnotes: the marker sits at the text margin and wrapped
+% lines align with the first line of footnote text.
+\RequirePackage[hang,flushmargin]{footmisc}
 \RequirePackage{hyperref}
 \RequirePackage{bookmark}
 
@@ -182,6 +190,11 @@
 % Avoid isolated first/last lines and fragile breaks around displayed material.
 \clubpenalty=10000
 \widowpenalty=10000
+% e-TeX's plural penalty prevents two- and three-line paragraph endings from
+% being stranded at the top of a page.  Four or more lines remain eligible,
+% allowing TeX to balance the end of a chapter instead of producing a nearly
+% empty continuation page.
+\widowpenalties 4 10000 10000 10000 0
 \displaywidowpenalty=10000
 \brokenpenalty=5000
 \interfootnotelinepenalty=10000
@@ -241,10 +254,14 @@
   \endgroup
 }
 
+% Reset the ordinary thesis text style at every matter boundary.  This keeps a
+% locally changed font size or line spacing from leaking into later sections.
+\newcommand{\uol@mattertextstyle}{\normalfont\normalsize\onehalfspacing}
+
 % Front matter is lower-case Roman; main matter restarts at Arabic 1.
-\renewcommand{\frontmatter}{\cleardoublepage\@mainmatterfalse\pagenumbering{roman}}
-\renewcommand{\mainmatter}{\cleardoublepage\@mainmattertrue\pagenumbering{arabic}}
-\renewcommand{\backmatter}{\if@openright\cleardoublepage\else\clearpage\fi\@mainmatterfalse}
+\renewcommand{\frontmatter}{\cleardoublepage\@mainmatterfalse\pagenumbering{roman}\uol@mattertextstyle}
+\renewcommand{\mainmatter}{\cleardoublepage\@mainmattertrue\pagenumbering{arabic}\uol@mattertextstyle}
+\renewcommand{\backmatter}{\if@openright\cleardoublepage\else\clearpage\fi\@mainmatterfalse\uol@mattertextstyle}
 
 \newcommand{\uol@frontmatterchapter}[1]{%
   \chapter*{#1}%
@@ -254,15 +271,52 @@
 
 \newenvironment{abstract}{%
   \uol@frontmatterchapter{Abstract}%
-  \begingroup\singlespacing
+  \begingroup\uol@mattertextstyle
 }{%
   \par\endgroup
 }
 
-\newenvironment{declaration}{\uol@frontmatterchapter{Declaration}}{}
-\newenvironment{acknowledgements}{\uol@frontmatterchapter{Acknowledgements}}{}
-\newenvironment{publications}{\uol@frontmatterchapter{List of Publications}\begin{enumerate}}{\end{enumerate}}
-\newenvironment{abbreviations}{\uol@frontmatterchapter{List of Abbreviations and Symbols}\begin{description}}{\end{description}}
+% PGR thesis declaration. Commands inside the environment store their values
+% first; the completed declaration is rendered when the environment ends.
+\newcommand{\uol@defaultdeclaration}{%
+  \noindent I declare that the research described in this thesis was conducted in accordance with the University of Liverpool's Postgraduate Research Code of Practice. Except where explicitly stated otherwise, the work presented in this thesis is my own and all sources have been appropriately acknowledged and referenced.\par
+  I confirm that I have not plagiarised or copied material, embellished, fabricated or falsified data, colluded inappropriately in producing the work, or submitted work that was commissioned or procured from another person or service.\par
+  I declare that this thesis has not been submitted, in whole or in part, in support of an application for another degree or academic award at this or any other institution.\par
+  Material arising from this doctoral research may have been published or submitted for publication. Where published material or collaborative research is incorporated in this thesis, my contribution and the contributions of others are identified clearly.\par
+  I permit the University, in cases of suspected academic malpractice, to use source-matching software to verify that the submitted work is my own and that the work of others has been acknowledged and referenced correctly.\par
+}
+\newcommand{\uol@declarationsignaturefield}{%
+  \ifdefempty{\uol@declarationsignature}
+    {}
+    {\IfFileExists{\uol@declarationsignature}
+       {\includegraphics[width=42mm,height=13mm,keepaspectratio]{\uol@declarationsignature}}
+       {\ClassWarning{liverpoolthesis}{Declaration signature file `\uol@declarationsignature' not found}%
+        }}%
+}
+\newcommand{\uol@declarationdatefield}{%
+  \ifdefempty{\uol@declarationdate}{}{\uol@declarationdate}%
+}
+\newenvironment{declaration}{%
+  \def\uol@declarationcontent{\uol@defaultdeclaration}%
+  \def\uol@declarationsignature{}%
+  \def\uol@declarationdate{}%
+  \long\def\content##1{\def\uol@declarationcontent{##1}}%
+  \def\signature##1{\def\uol@declarationsignature{##1}}%
+  \def\signdata##1{\def\uol@declarationdate{##1}}%
+}{%
+  \uol@frontmatterchapter{Declaration}%
+  \begingroup\uol@mattertextstyle
+  \uol@declarationcontent
+  \vspace{1.5\baselineskip}%
+  \noindent\begin{tabular}{@{}l@{\hspace{1.5em}}l@{}}
+    \parbox[c][13mm][c]{25mm}{\textbf{Signature}} & \parbox[c][13mm][c]{50mm}{\uol@declarationsignaturefield} \\[2em]
+    \parbox[c][7mm][c]{25mm}{\textbf{Date}} & \parbox[c][7mm][c]{50mm}{\uol@declarationdatefield}
+  \end{tabular}%
+  \par\endgroup
+}
+\newenvironment{acknowledgements}{\uol@frontmatterchapter{Acknowledgements}\begingroup\uol@mattertextstyle}{\par\endgroup}
+\newenvironment{publications}{\uol@frontmatterchapter{List of Publications}\begingroup\uol@mattertextstyle\begin{enumerate}}{\end{enumerate}\endgroup}
+\newenvironment{abbreviations}{\uol@frontmatterchapter{List of Abbreviations and Symbols}\begingroup\uol@mattertextstyle\begin{description}}{\end{description}\endgroup}
 \newenvironment{dedication}{\cleardoublepage\thispagestyle{plain}\null\vfill\begin{center}\itshape}{\end{center}\vfill\null\clearpage}
 
 % The University requires all separate thesis sections to be identified in the
@@ -326,7 +380,7 @@
   colorlinks=true,
   linkcolor=black,
   citecolor=black,
-  urlcolor=blue,
+  urlcolor=black,
   pdflang={en-GB},
   pdfdisplaydoctitle=true
 }

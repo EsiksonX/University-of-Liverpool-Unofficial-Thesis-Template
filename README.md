@@ -13,7 +13,7 @@
 </p>
 
 <p align="center">
-  <img alt="Version 1.4" src="https://img.shields.io/badge/version-1.4-101F6B">
+  <img alt="Version 1.5" src="https://img.shields.io/badge/version-1.5-101F6B">
   <a href="https://www.overleaf.com/latex/templates/university-of-liverpool-unofficial-thesis-template/tgdthwyrbtjx"><img alt="Open in Overleaf" src="https://img.shields.io/badge/Open%20in-Overleaf-47A141?logo=overleaf&logoColor=white"></a>
   <a href="#-build"><img alt="pdfLaTeX and BibTeX" src="https://img.shields.io/badge/local%20build-pdfLaTeX%20%2B%20BibTeX-008080?logo=latex&logoColor=white"></a>
   <a href="example.pdf"><img alt="Compiled example" src="https://img.shields.io/badge/example-PDF-B30B00?logo=adobeacrobatreader&logoColor=white"></a>
@@ -206,7 +206,9 @@ Abstract text.
 \end{abstract}
 
 \begin{declaration}
-Declaration text.
+% \content{Customized declaration content.}
+\signature{uol-figures/signature.png}
+\signdata{16 July, 2025}
 \end{declaration}
 
 \begin{acknowledgements}
@@ -231,12 +233,16 @@ Acknowledgements text.
 
 The class provides these front-matter environments:
 
-- `abstract` — automatically single-spaced;
-- `declaration`;
+- `abstract` — uses the same 12pt type and one-and-a-half line spacing as the thesis body;
+- `declaration` — prints a doctoral-thesis declaration based on the current PGR Academic Integrity Policy, with `\signature{...}` and `\signdata{...}` fields; an optional `\content{...}` replaces the default text;
 - `acknowledgements`;
 - `publications` — an enumerated list that can pull complete entries from BibTeX;
 - `abbreviations` — a description list for abbreviations and symbols;
 - `dedication` — centred optional dedication text.
+
+The University PGR Academic Integrity Policy states that the formal Academic Honesty Declaration for a campus-based initial thesis is normally incorporated into the submission form, while its standalone annexe may be used when a separate declaration is required. The template's `Declaration` page is a doctoral-thesis declaration derived from those PGR requirements; candidates should confirm any School-specific wording before submission.
+
+The `\signature{...}` command accepts PDF, PNG and JPEG files. Crop the file to the visible signature before use because the class preserves its page or image bounds and scales the complete file without format-specific trimming.
 
 For a multi-file thesis, keep the document declaration in the main file and include chapters after `\mainmatter`:
 

@@ -1,4 +1,4 @@
-\documentclass[12pt,oneside,header=auto]{liverpoolthesis}
+\documentclass[oneside,header=auto]{liverpoolthesis}
 % Select the discipline once; the template chooses a suitable bibliography
 % style. General or unknown disciplines fall back to APA. An explicit
 % style=... option can override the automatic choice when required.
@@ -29,7 +29,11 @@ This document is both the user guide and the working example for the University 
 \end{abstract}
 
 \begin{declaration}
-The declaration in a submitted thesis must accurately describe the candidate's original contribution and any material completed jointly with others. Replace this instructional paragraph with the declaration agreed for the thesis; do not retain template text in the submitted document.
+% \content{
+% Customized declaration content.
+% }
+\signature{uol-figures/signature.png}
+\signdata{16 July, 2025}
 \end{declaration}
 
 \begin{acknowledgements}
@@ -141,7 +145,7 @@ Place \verb|\frontmatter| before \verb|\maketitle|. The title page is counted as
   \item List of Abbreviations and Symbols.
 \end{enumerate}
 
-The abstract environment is single-spaced automatically. Annexe 1 limits it to one side of A4, normally about 450 words, and requires it to state the aims and results of the investigation \citep{uolformatting}. The other preliminary sections inherit the normal thesis spacing.
+The abstract uses the same 12pt type and one-and-a-half line spacing as the thesis body. Annexe 1 limits it to one side of A4, normally about 450 words, and requires it to state the aims and results of the investigation \citep{uolformatting}. The declaration environment prints a doctoral-thesis declaration based on the University's current PGR Academic Integrity Policy together with the signature image and date supplied through \verb|\signature{...}| and \verb|\signdata{...}|. It distinguishes submission of thesis material for another academic award from the legitimate incorporation of published doctoral research, whose authorship and candidate contribution must be identified clearly. For campus-based PGR students the formal Academic Honesty Declaration is normally incorporated into the initial thesis submission form; candidates should confirm whether their School also expects a declaration page in the thesis \citep{uolpgrintegrity}. If an approved alternative declaration is required, uncomment \verb|\content{...}| inside the environment to replace the default text. All preliminary sections inherit the normal thesis spacing.
 
 List publications from \texttt{references.bib} rather than retyping their details. Replace the demonstration keys with the keys for the candidate's own outputs:
 
@@ -443,7 +447,9 @@ Abstract text.
 \end{abstract}
 
 \begin{declaration}
-Declaration text.
+% \content{Customized declaration content.}
+\signature{uol-figures/signature.png}
+\signdata{16 July, 2025}
 \end{declaration}
 
 \begin{acknowledgements}

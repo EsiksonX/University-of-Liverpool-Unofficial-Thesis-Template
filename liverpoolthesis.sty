@@ -1,6 +1,6 @@
 % Companion visual style for liverpoolthesis.cls
 \NeedsTeXFormat{LaTeX2e}
-\ProvidesPackage{liverpoolthesis}[2026/08/27 v1.4 Liverpool thesis style]
+\ProvidesPackage{liverpoolthesis}[2026/09/02 v1.5 Liverpool thesis style]
 
 \RequirePackage{kvoptions}
 \SetupKeyvalOptions{family=uolbib,prefix=uolbib@}
@@ -64,8 +64,8 @@
 
 % Centre captions that fit on one line and left-align longer captions.
 \captionsetup{font=small,labelfont=bf,justification=raggedright,singlelinecheck=true}
-\captionsetup[table]{position=top,skip=6pt}
-\captionsetup[figure]{position=bottom,skip=6pt}
+\captionsetup[table]{position=bottom,skip=5pt plus 2pt minus 2pt}
+\captionsetup[figure]{position=bottom,skip=5pt plus 2pt minus 2pt}
 \renewcommand{\arraystretch}{1.15}
 \setlength{\tabcolsep}{6pt}
 % Ordinary table/tabular environments inherit the thesis table typography.
@@ -96,9 +96,9 @@
 \renewcommand{\floatpagefraction}{0.75}
 \renewcommand{\dbltopfraction}{0.90}
 \renewcommand{\dblfloatpagefraction}{0.75}
-\setlength{\floatsep}{0.85\baselineskip plus 0.2\baselineskip minus 0.2\baselineskip}
-\setlength{\textfloatsep}{1.25\baselineskip plus 0.2\baselineskip minus 0.3\baselineskip}
-\setlength{\intextsep}{0.85\baselineskip plus 0.2\baselineskip minus 0.2\baselineskip}
+\setlength{\floatsep}{0.75\baselineskip plus 0.35\baselineskip minus 0.30\baselineskip}
+\setlength{\textfloatsep}{0.90\baselineskip plus 0.45\baselineskip minus 0.45\baselineskip}
+\setlength{\intextsep}{0.75\baselineskip plus 0.35\baselineskip minus 0.30\baselineskip}
 \setlength{\@fptop}{0pt plus 1fil}
 \setlength{\@fpsep}{0.8\baselineskip plus 2fil}
 \setlength{\@fpbot}{0pt plus 1fil}
