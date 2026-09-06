@@ -378,7 +378,7 @@
   unicode=true,
   bookmarksnumbered=true,
   colorlinks=true,
-  linkcolor=black,
+  linkcolor=.,
   citecolor=black,
   urlcolor=black,
   pdflang={en-GB},
