@@ -8,6 +8,12 @@
 \newif\if@uol@parskip
 \@uol@parskipfalse
 \def\@uol@headerstyle{auto}
+% Side on which page i begins after the unnumbered cover (two-sided only).
+\newif\if@uol@frontstartright
+\@uol@frontstartrighttrue
+\newif\if@uol@firstfrontchapter
+\DeclareOption{frontstart=right}{\@uol@frontstartrighttrue}
+\DeclareOption{frontstart=left}{\@uol@frontstartrightfalse}
 \DeclareOption{twoside}{\@uol@twosidetrue\PassOptionsToClass{twoside,openright}{book}}
 \DeclareOption{oneside}{\@uol@twosidefalse\PassOptionsToClass{oneside,openany}{book}}
 \DeclareOption{parskip}{\@uol@parskiptrue}
@@ -46,6 +52,24 @@
 \RequirePackage[hang,flushmargin]{footmisc}
 \RequirePackage{hyperref}
 \RequirePackage{bookmark}
+
+% Binding sides follow physical PDF pages, independent of printed page numbers.
+% During page construction the shipout counter counts already completed pages.
+\newcommand*{\uol@physicalpage}{\numexpr\ReadonlyShipoutCounter+1\relax}
+\AtBeginDocument{%
+  \patchcmd{\@outputpage}{\ifodd\count\z@}{\ifodd\uol@physicalpage}
+    {}{\ClassError{liverpoolthesis}{Cannot install physical-page margins}
+       {The LaTeX output routine has changed; check the template patch.}}%
+}
+\renewcommand{\cleardoublepage}{%
+  \clearpage
+  \if@twoside
+    \ifodd\uol@physicalpage\else
+      \hbox{}\thispagestyle{empty}\newpage
+      \if@twocolumn\hbox{}\thispagestyle{empty}\newpage\fi
+    \fi
+  \fi
+}
 
 % Thesis heading-number selector. The public secnumdepth values intentionally
 % provide separate chapterless and chapter-based sequences:
@@ -225,6 +249,9 @@
 \renewcommand{\maketitle}{%
   \clearpage
   \begingroup
+    % The cover (and any blank reverse) has no printed page
+    % number or page.i anchor.  It still participates in physical binding parity.
+    \hypersetup{pageanchor=false}%
     \thispagestyle{empty}
     \centering
     \IfFileExists{\@uol@logofile}{%
@@ -251,7 +278,19 @@
     \vfill
     {\large \@date\par}
     \clearpage
+    \if@twoside
+      \if@uol@frontstartright
+        \cleardoublepage
+      \else
+        \ifodd\uol@physicalpage
+          \hbox{}\thispagestyle{empty}\newpage
+          \if@twocolumn\hbox{}\thispagestyle{empty}\newpage\fi
+        \fi
+      \fi
+    \fi
   \endgroup
+  \setcounter{page}{1}%
+  \global\@uol@firstfrontchaptertrue
 }
 
 % Reset the ordinary thesis text style at every matter boundary.  This keeps a
@@ -263,8 +302,20 @@
 \renewcommand{\mainmatter}{\cleardoublepage\@mainmattertrue\pagenumbering{arabic}\uol@mattertextstyle}
 \renewcommand{\backmatter}{\if@openright\cleardoublepage\else\clearpage\fi\@mainmatterfalse\uol@mattertextstyle}
 
-\newcommand{\uol@frontmatterchapter}[1]{%
+\newcommand{\uol@firstfrontheading}[1]{%
+  \global\@uol@firstfrontchapterfalse
+  \let\uol@savedopenright\if@openright
+  \@openrightfalse
   \chapter*{#1}%
+  \let\if@openright\uol@savedopenright
+}
+\newcommand{\uol@frontmatterchapter}[1]{%
+  % The first front-matter heading must honour frontstart even with openright.
+  \if@uol@firstfrontchapter
+    \uol@firstfrontheading{#1}%
+  \else
+    \chapter*{#1}%
+  \fi
   \phantomsection
   \addcontentsline{toc}{chapter}{#1}%
 }
@@ -343,12 +394,12 @@
 % On recto (odd) pages the inner edge is left and the outer edge is right;
 % the positions reverse on verso (even) pages.
 \newcommand{\@uol@header@inner}{%
-  \fancyhead[L]{\ifodd\value{page}\@uol@headertext\fi}%
-  \fancyhead[R]{\ifodd\value{page}\else\@uol@headertext\fi}%
+  \fancyhead[L]{\ifodd\uol@physicalpage\@uol@headertext\fi}%
+  \fancyhead[R]{\ifodd\uol@physicalpage\else\@uol@headertext\fi}%
 }
 \newcommand{\@uol@header@outer}{%
-  \fancyhead[L]{\ifodd\value{page}\else\@uol@headertext\fi}%
-  \fancyhead[R]{\ifodd\value{page}\@uol@headertext\fi}%
+  \fancyhead[L]{\ifodd\uol@physicalpage\else\@uol@headertext\fi}%
+  \fancyhead[R]{\ifodd\uol@physicalpage\@uol@headertext\fi}%
 }
 \newcommand{\@uol@header@auto}{%
   \if@uol@twoside\@uol@header@outer\else\@uol@header@right\fi

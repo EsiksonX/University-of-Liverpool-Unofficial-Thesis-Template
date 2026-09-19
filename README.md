@@ -171,15 +171,17 @@ The class resolves the logo internally as `uol-figures/logo.png`; do not set the
 |---|---|
 | `oneside` | Single-sided layout with chapters allowed to start on either page. |
 | `twoside` | Mirrored margins and chapters starting on right-hand pages. |
+| `frontstart=right` | In `twoside`, place Roman page i on a right-hand page after the unnumbered cover; this is the default. |
+| `frontstart=left` | In `twoside`, place Roman page i on a left-hand page immediately after the unnumbered cover. |
 | `indent` | Traditional first-line paragraph indentation; this is the default. |
 | `parskip` | Separated paragraphs with no first-line indentation. |
 | `header=auto` | Right-aligned running heads in `oneside`, outer-edge running heads in `twoside`; this is the default. |
 | `header=left` | Place every running head at the left edge. |
 | `header=right` | Place every running head at the right edge. |
-| `header=inner` | Place running heads on the left of odd pages and right of even pages. |
-| `header=outer` | Place running heads on the right of odd pages and left of even pages. |
+| `header=inner` | Place running heads at the physical binding edge: left on recto pages and right on verso pages. |
+| `header=outer` | Place running heads at the physical outer edge: right on recto pages and left on verso pages. |
 
-The template defaults to 12pt, so it does not need to be written in the document options. The University requires a clear and consistent font but does not prescribe a particular font size; standard `book` sizes such as `10pt` or `11pt` remain available when a supervisor or School specifically requests one.
+The class fixes the thesis at 12pt, so no font-size option is needed. If `10pt` or `11pt` is supplied accidentally, the class issues a warning and continues at 12pt.
 
 ### Metadata commands
 
@@ -233,6 +235,8 @@ Acknowledgements text.
 \mainmatter
 \chapter{Introduction}
 ```
+
+The cover is unnumbered and is not counted as Roman page i. The first front-matter heading after `\maketitle` is page i. In `twoside`, `frontstart=right` inserts an unnumbered blank reverse of the cover so that page i begins on the right; select `frontstart=left` to begin page i on the left without that blank page. Blank alignment pages have no page number or running head.
 
 The class provides these front-matter environments:
 
@@ -398,10 +402,12 @@ The default `liverpool` listings style provides line numbers, restrained colour,
 ### Double-sided printing
 
 ```latex
-\documentclass[twoside,header=outer]{liverpoolthesis}
+\documentclass[twoside,frontstart=right,header=outer]{liverpoolthesis}
 ```
 
-Use `header=inner` for the reverse alternating arrangement. For a fixed position in an electronic edition, use `header=left` or `header=right`. The equivalent preamble command is `\thesisheaderstyle{left}`, `\thesisheaderstyle{right}`, `\thesisheaderstyle{inner}`, `\thesisheaderstyle{outer}`, or `\thesisheaderstyle{auto}`. Chapter-opening pages remain header-free by convention.
+`frontstart=right` is the default and places Roman page i on a recto page after an unnumbered blank reverse of the cover. Use `frontstart=left` when page i should occupy the verso immediately behind the cover. The class determines mirrored margins, inserted blank pages and alternating headers from physical PDF-page parity rather than reset Roman or Arabic page numbers, so the binding edge remains correct throughout the document.
+
+Use `header=inner` for running heads at the binding edge. For a fixed position in an electronic edition, use `header=left` or `header=right`. The equivalent preamble command is `\thesisheaderstyle{left}`, `\thesisheaderstyle{right}`, `\thesisheaderstyle{inner}`, `\thesisheaderstyle{outer}`, or `\thesisheaderstyle{auto}`. Chapter-opening and automatically inserted blank pages remain header-free.
 
 ### Paragraphs separated by space
 
@@ -440,6 +446,7 @@ Do **not** place `\backmatter` before these appendices: the underlying `book` cl
 | Citations show as `?` or the reference list is empty | Run the complete `pdflatex → bibtex → pdflatex → pdflatex` sequence. |
 | The title-page logo is missing | Preserve the path `uol-figures/logo.png` relative to the main `.tex` file. |
 | Figures are missing | Check image paths and keep `uol-figures/campus.jpg` when compiling the supplied example. |
+| Roman page i starts on the unwanted side in a printed copy | Use `frontstart=right` or `frontstart=left` with the `twoside` class option. |
 | Appendix letters disappear | Remove `\backmatter` before `\appendix`. |
 | An unknown discipline warning appears | Use one of the accepted lower-case, hyphenated values; otherwise APA is selected as the fallback. |
 | A required package is unavailable | Install the missing package through the TeX distribution and rebuild from the first pdfLaTeX pass. |
