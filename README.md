@@ -163,8 +163,16 @@ The class resolves the logo internally as `uol-figures/logo.png`; do not set the
 
 ### Class options
 
+For a one-sided electronic copy:
+
 ```latex
 \documentclass[oneside,indent,header=right]{liverpoolthesis}
+```
+
+For a double-sided printed copy with Roman page i starting on a right-hand page:
+
+```latex
+\documentclass[twoside,frontstart=right,indent,header=outer]{liverpoolthesis}
 ```
 
 | Option | Effect |
@@ -180,6 +188,8 @@ The class resolves the logo internally as `uol-figures/logo.png`; do not set the
 | `header=right` | Place every running head at the right edge. |
 | `header=inner` | Place running heads at the physical binding edge: left on recto pages and right on verso pages. |
 | `header=outer` | Place running heads at the physical outer edge: right on recto pages and left on verso pages. |
+
+The `frontstart` option only affects `twoside` documents. It is ignored in `oneside` output because one-sided pages have no recto-verso placement requirement.
 
 The class fixes the thesis at 12pt, so no font-size option is needed. If `10pt` or `11pt` is supplied accidentally, the class issues a warning and continues at 12pt.
 
